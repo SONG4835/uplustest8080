@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Navigate, useNavigate, useSearchParams } from "react-router"
 import { Header } from "../components/Header"
 import { ListRow } from "../components/ListRow"
@@ -8,7 +8,7 @@ import { BottomCTA } from "../components/BottomCTA"
 import { Button } from "../components/Button"
 import { findPlan } from "./plans"
 import { afterDiscountText, copy, formatWon } from "./content"
-import { rememberSubscriptionNo, saveSubscription } from "./subscription"
+import { saveSubscription } from "./subscription"
 
 const PHONE_RE = /^\d{11}$/
 
@@ -22,8 +22,6 @@ export function ApplyPage() {
   const [agreed, setAgreed] = useState(false)
   const [touched, setTouched] = useState({ name: false, phone: false, privacy: false })
   const [saveError, setSaveError] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const submitting = useRef(false)
 
   if (!plan) return <Navigate to="/plans" replace />
 
@@ -33,29 +31,21 @@ export function ApplyPage() {
   const after = afterDiscountText(plan)
   const toDetail = () => navigate(`/plans/${plan.id}`)
 
-  const submit = async () => {
-    if (!valid || submitting.current) return
-    submitting.current = true
-    setSaving(true)
-    setSaveError(false)
-    let no: string
+  const submit = () => {
+    if (!valid) return
     try {
-      no = await saveSubscription({
+      saveSubscription({
         name: name.trim(),
         phone,
         plan_id: plan.id,
-        plan_name: plan.name,
         monthly_price: plan.monthly_price,
         agreed_privacy: agreed,
       })
     } catch {
-      submitting.current = false
-      setSaving(false)
       setSaveError(true)
       return
     }
-    rememberSubscriptionNo(no)
-    navigate("/complete", { state: { no } })
+    navigate("/complete")
   }
 
   return (
@@ -78,7 +68,7 @@ export function ApplyPage() {
           className="flex w-full flex-col gap-16 pb-80"
           onSubmit={(e) => {
             e.preventDefault()
-            void submit()
+            submit()
           }}
         >
           <Input
@@ -118,7 +108,7 @@ export function ApplyPage() {
         <Button variant="Secondary" size="xl" fullWidth onClick={toDetail}>
           취소
         </Button>
-        <Button variant="Primary" size="xl" fullWidth disabled={!valid || saving} onClick={() => void submit()}>
+        <Button variant="Primary" size="xl" fullWidth disabled={!valid} onClick={submit}>
           신청하기
         </Button>
       </BottomCTA>
