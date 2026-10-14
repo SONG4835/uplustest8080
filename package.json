@@ -1,0 +1,7 @@
+{
+  "name": "uplus-plans-root",
+  "private": true,
+  "scripts": {
+    "build": "cd app && npm install --no-audit --no-fund && npm run build"
+  }
+}
