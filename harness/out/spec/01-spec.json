@@ -1,0 +1,85 @@
+{
+  "routes": ["/plans", "/plans/[id]", "/apply", "/complete"],
+  "plans": [
+    {
+      "id": "p01",
+      "name": "슬림 10GB",
+      "monthly_price": 39000,
+      "data": "10GB",
+      "throttle_after": "1Mbps",
+      "price_after_discount": null,
+      "discount_months": null,
+      "description": "출퇴근 영상 시청이 적은 고객용 기본 요금제",
+      "recommended": false
+    },
+    {
+      "id": "p02",
+      "name": "데일리 50GB",
+      "monthly_price": 52000,
+      "data": "50GB",
+      "throttle_after": "1Mbps",
+      "price_after_discount": null,
+      "discount_months": null,
+      "description": "출퇴근길 영상을 월말까지 보고 싶은 고객용",
+      "recommended": true
+    },
+    {
+      "id": "p03",
+      "name": "무제한 라이트",
+      "monthly_price": 59000,
+      "data": "기본 100GB",
+      "throttle_after": "5Mbps",
+      "price_after_discount": 69000,
+      "discount_months": 24,
+      "description": "이름은 무제한이지만 기본 데이터 소진 후 속도가 제한됨",
+      "recommended": false
+    },
+    {
+      "id": "p04",
+      "name": "무제한 프리",
+      "monthly_price": 75000,
+      "data": "무제한",
+      "throttle_after": null,
+      "price_after_discount": null,
+      "discount_months": null,
+      "description": "데이터를 다 써도 속도 제한이 없는 요금제",
+      "recommended": false
+    }
+  ],
+  "filters": [
+    { "label": "전체", "plan_ids": ["p01", "p02", "p03", "p04"] },
+    { "label": "50GB 이하", "plan_ids": ["p01", "p02"] },
+    { "label": "100GB 이상", "plan_ids": ["p03", "p04"] },
+    { "label": "속도 제한 없음", "plan_ids": ["p04"] }
+  ],
+  "copy": {
+    "errors": {
+      "name": "이름을 입력해 주세요.",
+      "phone": "휴대폰 번호 11자리를 숫자로 입력해 주세요.",
+      "privacy": "개인정보 수집·이용에 동의해야 신청할 수 있어요.",
+      "save": "신청을 저장하지 못했어요. 다시 시도해 주세요."
+    },
+    "emptyFilter": "조건에 맞는 요금제가 없어요.",
+    "complete": "구독 신청이 완료됐어요",
+    "buttons": ["자세히", "구독 신청하기", "신청하기", "요금제 더 보기"]
+  },
+  "nav": [
+    { "from": "/plans", "trigger": "자세히", "to": "/plans/[id]" },
+    { "from": "/plans/[id]", "trigger": "뒤로", "to": "/plans" },
+    { "from": "/plans/[id]", "trigger": "구독 신청하기", "to": "/apply" },
+    { "from": "/apply", "trigger": "뒤로", "to": "/plans/[id]" },
+    { "from": "/apply", "trigger": "취소", "to": "/plans/[id]" },
+    { "from": "/apply", "trigger": "신청하기", "to": "/complete" },
+    { "from": "/complete", "trigger": "뒤로", "to": "/plans" },
+    { "from": "/complete", "trigger": "요금제 더 보기", "to": "/plans" }
+  ],
+  "rules": [
+    "요금제 목록에 요금제 카드가 정확히 4개(p01~p04) 있다.",
+    "추천 Tag는 요금제 목록에 1개만 있다.",
+    "요금제 카드와 요금제 상세에는 금액이 \"매달 내는 금액\" 1개와 \"할인 종료 후 금액\" 최대 1개만 있다. 정가·할인가·프로모션가 3개가 함께 표시되지 않는다.",
+    "할인 종료 후 금액은 24개월 할인이 있는 요금제(p03)에만 있다.",
+    "이름에 \"무제한\"이 들어간 요금제(p03, p04)의 카드와 상세에는 \"소진 후 ○Mbps로 제한\" 또는 \"속도 제한 없음\" 중 하나가 있다.",
+    "구독 신청 화면에서 이름·휴대폰 번호가 비어 있거나 동의가 체크되지 않으면 '신청하기' 버튼이 눌리지 않는다.",
+    "신청 완료 화면의 요금제 이름과 매달 내는 금액이 구독 신청 화면에서 선택한 요금제와 같다."
+  ]
+}
