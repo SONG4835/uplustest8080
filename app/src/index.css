@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+/* scaffold 전용 전역 스타일. 390 = Design.md 기준 viewport 폭 */
+body {
+  margin: 0;
+  background: var(--color-bg-default);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+#root {
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--color-bg-default);
+}

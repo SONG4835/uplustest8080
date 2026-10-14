@@ -1,0 +1,8 @@
+﻿{
+    "eval_id":  0,
+    "assertions":  [
+
+                   ],
+    "prompt":  "src\\App.tsx에 초보자용 설명 주석 달기",
+    "eval_name":  "app-tsx"
+}

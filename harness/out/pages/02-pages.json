@@ -1,0 +1,270 @@
+{
+  "pages": [
+    {
+      "route": "/plans",
+      "file": "PlansPage.tsx",
+      "components": [
+        {
+          "name": "Header",
+          "variant": { "Type": "root" },
+          "props": { "Title": "요금제" },
+          "children": [
+            { "name": "Logo", "variant": {}, "props": {}, "children": [] }
+          ]
+        },
+        {
+          "name": "div",
+          "variant": {},
+          "props": { "role": "filters" },
+          "children": [
+            { "name": "FilterChip", "variant": { "State": "selected" }, "props": { "Label": "전체" }, "children": [] },
+            { "name": "FilterChip", "variant": { "State": "default" }, "props": { "Label": "50GB 이하" }, "children": [] },
+            { "name": "FilterChip", "variant": { "State": "default" }, "props": { "Label": "100GB 이상" }, "children": [] },
+            { "name": "FilterChip", "variant": { "State": "default" }, "props": { "Label": "속도 제한 없음" }, "children": [] }
+          ]
+        },
+        {
+          "name": "div",
+          "variant": {},
+          "props": { "role": "plan-list" },
+          "children": [
+            {
+              "name": "Card/Plan",
+              "variant": { "State": "default" },
+              "props": {
+                "planId": "p01",
+                "Name": "슬림 10GB",
+                "Desc": "출퇴근 영상 시청이 적은 고객용 기본 요금제",
+                "Price": "39,000원",
+                "Discount": "",
+                "Original": "",
+                "Badge": false,
+                "Promo": false,
+                "Sale": false
+              },
+              "children": [
+                { "name": "Button", "variant": { "Type": "Secondary", "Size": "sm", "State": "Default" }, "props": { "Label": "자세히" }, "children": [] }
+              ]
+            },
+            {
+              "name": "Card/Plan",
+              "variant": { "State": "default" },
+              "props": {
+                "planId": "p02",
+                "Name": "데일리 50GB",
+                "Desc": "출퇴근길 영상을 월말까지 보고 싶은 고객용",
+                "Price": "52,000원",
+                "Discount": "",
+                "Original": "",
+                "Badge": true,
+                "Promo": false,
+                "Sale": false
+              },
+              "children": [
+                { "name": "Tag", "variant": {}, "props": { "Label": "추천" }, "children": [] },
+                { "name": "Button", "variant": { "Type": "Secondary", "Size": "sm", "State": "Default" }, "props": { "Label": "자세히" }, "children": [] }
+              ]
+            },
+            {
+              "name": "Card/Plan",
+              "variant": { "State": "default" },
+              "props": {
+                "planId": "p03",
+                "Name": "무제한 라이트",
+                "Desc": "이름은 무제한이지만 기본 데이터 소진 후 속도가 제한됨",
+                "Price": "59,000원",
+                "Discount": "25개월째부터 69,000원",
+                "Original": "",
+                "Throttle": "소진 후 5Mbps로 제한",
+                "Badge": false,
+                "Promo": true,
+                "Sale": false
+              },
+              "children": [
+                { "name": "Chip", "variant": { "Type": "sale" }, "props": { "Label": "24개월 할인" }, "children": [] },
+                { "name": "Button", "variant": { "Type": "Secondary", "Size": "sm", "State": "Default" }, "props": { "Label": "자세히" }, "children": [] }
+              ]
+            },
+            {
+              "name": "Card/Plan",
+              "variant": { "State": "default" },
+              "props": {
+                "planId": "p04",
+                "Name": "무제한 프리",
+                "Desc": "데이터를 다 써도 속도 제한이 없는 요금제",
+                "Price": "75,000원",
+                "Discount": "",
+                "Original": "",
+                "Throttle": "속도 제한 없음",
+                "Badge": false,
+                "Promo": false,
+                "Sale": false
+              },
+              "children": [
+                { "name": "Button", "variant": { "Type": "Secondary", "Size": "sm", "State": "Default" }, "props": { "Label": "자세히" }, "children": [] }
+              ]
+            }
+          ]
+        }
+      ],
+      "nav": [
+        { "trigger": "자세히", "to": "/plans/[id]" }
+      ]
+    },
+    {
+      "route": "/plans/[id]",
+      "file": "PlanDetailPage.tsx",
+      "components": [
+        {
+          "name": "Header",
+          "variant": { "Type": "default" },
+          "props": { "Title": "요금제 상세" },
+          "children": [
+            { "name": "icon/arrowLeft", "variant": {}, "props": { "aria-label": "뒤로" }, "children": [] }
+          ]
+        },
+        {
+          "name": "div",
+          "variant": {},
+          "props": { "role": "plan-detail", "planId": "{plan.id}" },
+          "children": [
+            { "name": "Tag", "variant": {}, "props": { "Label": "추천", "showWhen": "plan.recommended" }, "children": [] },
+            {
+              "name": "Card/Price",
+              "variant": {},
+              "props": {
+                "Label": "매달 내는 금액",
+                "Value": "{plan.monthly_price}원",
+                "Desc": "{discount_months}개월 할인 후: {months+1}개월째부터 {plan.price_after_discount}원 (p03만)"
+              },
+              "children": []
+            },
+            {
+              "name": "div",
+              "variant": {},
+              "props": { "role": "basic-items" },
+              "children": [
+                { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "데이터", "Value": "{plan.data}" }, "children": [] },
+                { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "소진 후 속도", "Value": "소진 후 {plan.throttle_after}로 제한 | 속도 제한 없음" }, "children": [] }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "BottomCTA",
+          "variant": { "Layout": "price" },
+          "props": { "AmountLabel": "매달 내는 금액", "Amount": "{plan.monthly_price}원" },
+          "children": [
+            { "name": "Button", "variant": { "Type": "Primary", "Size": "xl", "State": "Default" }, "props": { "Label": "구독 신청하기" }, "children": [] }
+          ]
+        }
+      ],
+      "nav": [
+        { "trigger": "뒤로", "to": "/plans" },
+        { "trigger": "구독 신청하기", "to": "/apply" }
+      ]
+    },
+    {
+      "route": "/apply",
+      "file": "ApplyPage.tsx",
+      "components": [
+        {
+          "name": "Header",
+          "variant": { "Type": "default" },
+          "props": { "Title": "구독 신청" },
+          "children": [
+            { "name": "icon/arrowLeft", "variant": {}, "props": { "aria-label": "뒤로" }, "children": [] }
+          ]
+        },
+        {
+          "name": "div",
+          "variant": {},
+          "props": { "role": "selected-plan" },
+          "children": [
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "요금제", "Value": "{plan.name}" }, "children": [] },
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "매달 내는 금액", "Value": "{plan.monthly_price}원" }, "children": [] }
+          ]
+        },
+        {
+          "name": "form",
+          "variant": {},
+          "props": {},
+          "children": [
+            { "name": "Input", "variant": { "State": "default" }, "props": { "label": "이름", "errorMessage": false, "errorText": "이름을 입력해 주세요." }, "children": [] },
+            { "name": "Input", "variant": { "State": "default" }, "props": { "label": "휴대폰 번호", "errorMessage": false, "errorText": "휴대폰 번호 11자리를 숫자로 입력해 주세요." }, "children": [] },
+            {
+              "name": "label",
+              "variant": {},
+              "props": { "text": "개인정보 수집·이용 동의" },
+              "children": [
+                { "name": "Checkbox", "variant": { "State": "default" }, "props": { "errorText": "개인정보 수집·이용에 동의해야 신청할 수 있어요." }, "children": [] }
+              ]
+            },
+            { "name": "p", "variant": {}, "props": { "text": "신청을 저장하지 못했어요. 다시 시도해 주세요.", "showWhen": "saveError" }, "children": [] }
+          ]
+        },
+        {
+          "name": "BottomCTA",
+          "variant": { "Layout": "double" },
+          "props": {},
+          "children": [
+            { "name": "Button", "variant": { "Type": "Secondary", "Size": "xl", "State": "Default" }, "props": { "Label": "취소" }, "children": [] },
+            { "name": "Button", "variant": { "Type": "Primary", "Size": "xl", "State": "Disabled" }, "props": { "Label": "신청하기", "enabledWhen": "name && phone && privacy" }, "children": [] }
+          ]
+        }
+      ],
+      "nav": [
+        { "trigger": "뒤로", "to": "/plans/[id]" },
+        { "trigger": "취소", "to": "/plans/[id]" },
+        { "trigger": "신청하기", "to": "/complete" }
+      ]
+    },
+    {
+      "route": "/complete",
+      "file": "CompletePage.tsx",
+      "components": [
+        {
+          "name": "Header",
+          "variant": { "Type": "default" },
+          "props": { "Title": "신청 완료" },
+          "children": [
+            { "name": "icon/arrowLeft", "variant": {}, "props": { "aria-label": "뒤로" }, "children": [] }
+          ]
+        },
+        {
+          "name": "div",
+          "variant": {},
+          "props": { "role": "done" },
+          "children": [
+            { "name": "icon/doneMark", "variant": {}, "props": {}, "children": [] },
+            { "name": "h1", "variant": {}, "props": { "text": "구독 신청이 완료됐어요" }, "children": [] }
+          ]
+        },
+        {
+          "name": "div",
+          "variant": {},
+          "props": { "role": "summary" },
+          "children": [
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "신청 번호", "Value": "{application.id}" }, "children": [] },
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "요금제", "Value": "{plan.name}" }, "children": [] },
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "매달 내는 금액", "Value": "{plan.monthly_price}원" }, "children": [] },
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "신청 일시", "Value": "{application.created_at}" }, "children": [] },
+            { "name": "List/Row", "variant": { "Type": "default" }, "props": { "Label": "신청자", "Value": "{application.name}" }, "children": [] }
+          ]
+        },
+        {
+          "name": "BottomCTA",
+          "variant": { "Layout": "single" },
+          "props": {},
+          "children": [
+            { "name": "Button", "variant": { "Type": "Primary", "Size": "xl", "State": "Default" }, "props": { "Label": "요금제 더 보기" }, "children": [] }
+          ]
+        }
+      ],
+      "nav": [
+        { "trigger": "뒤로", "to": "/plans" },
+        { "trigger": "요금제 더 보기", "to": "/plans" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+
+# harness
+app/dist/
+app/.harness-tests/
+harness/out/05-verify.json
+harness/out/shots/
+
+# 로컬 환경변수
+*.local
